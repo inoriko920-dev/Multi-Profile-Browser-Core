@@ -16,6 +16,7 @@
     "test": "npm run build && node scripts/run-tests.mjs",
     "smoke": "npm run build && node scripts/smoke-electron.mjs",
     "smoke:browser": "npm run build && node scripts/smoke-browser-engine.mjs",
+    "smoke:step02": "npm run build && node scripts/smoke-step02-harness.mjs",
     "step02": "npm run build && electron . --step02",
     "start": "npm run build && electron .",
     "dev": "npm run start"

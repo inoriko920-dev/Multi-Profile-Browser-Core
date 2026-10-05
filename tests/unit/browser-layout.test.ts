@@ -7,7 +7,7 @@ test('places browser surface below the local toolbar', () => {
     x: 0,
     y: BROWSER_TOOLBAR_HEIGHT,
     width: 1200,
-    height: 724,
+    height: 682,
   });
 });
 

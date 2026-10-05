@@ -40,6 +40,24 @@ const reloadButton = requireElement<HTMLButtonElement>('#reload');
 const form = requireElement<HTMLFormElement>('#navigation-form');
 const addressInput = requireElement<HTMLInputElement>('#address');
 const status = requireElement<HTMLDivElement>('#status');
+const quickTargets = [...document.querySelectorAll<HTMLButtonElement>('[data-step02-url]')];
+
+function hostOf(value: string): string {
+  try {
+    return new URL(value).hostname.toLowerCase();
+  } catch {
+    return '';
+  }
+}
+
+function renderQuickTargetState(currentUrl: string): void {
+  const currentHost = hostOf(currentUrl);
+
+  for (const button of quickTargets) {
+    const targetUrl = button.dataset.step02Url ?? '';
+    button.dataset.active = String(Boolean(currentHost) && hostOf(targetUrl) === currentHost);
+  }
+}
 
 function renderState(state: BrowserState): void {
   backButton.disabled = !state.canGoBack || state.isLoading;
@@ -49,6 +67,8 @@ function renderState(state: BrowserState): void {
   if (document.activeElement !== addressInput && state.url) {
     addressInput.value = state.url;
   }
+
+  renderQuickTargetState(state.url);
 
   if (state.lastError) {
     status.textContent = 'Gagal memuat';
@@ -86,6 +106,18 @@ forwardButton.addEventListener('click', () => {
 reloadButton.addEventListener('click', () => {
   void window.foundation.browser.reload().catch(showActionError);
 });
+
+for (const button of quickTargets) {
+  button.addEventListener('click', () => {
+    const targetUrl = button.dataset.step02Url;
+    if (!targetUrl) {
+      showActionError(new Error('Target STEP 02 tidak valid.'));
+      return;
+    }
+
+    void window.foundation.browser.navigate(targetUrl).catch(showActionError);
+  });
+}
 
 window.foundation.browser.onStateChanged(renderState);
 void window.foundation.browser.getState().then(renderState).catch(showActionError);

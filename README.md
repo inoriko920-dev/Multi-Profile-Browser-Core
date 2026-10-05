@@ -36,6 +36,7 @@ Sebelum implementasi, baca:
 - [`00_MASTER_PLAN_MULTI_PROFILE_BROWSER_CORE.md`](docs/planning/00_MASTER_PLAN_MULTI_PROFILE_BROWSER_CORE.md)
 - [`01_TEST_PLAN_MULTI_PROFILE_BROWSER_CORE.md`](docs/planning/01_TEST_PLAN_MULTI_PROFILE_BROWSER_CORE.md)
 - [`docs/planning/README.md`](docs/planning/README.md)
+- [`STEP_02_GOOGLE_LOGIN_COMPATIBILITY.md`](docs/testing/STEP_02_GOOGLE_LOGIN_COMPATIBILITY.md)
 
 Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek. Versi Markdown adalah sumber yang mudah dibaca GitHub, dicari, dibandingkan melalui Git, dan digunakan implementer/AI.
 
@@ -72,6 +73,7 @@ npm run lint
 npm test
 npm run smoke
 npm run smoke:browser
+npm run smoke:step02
 npm start
 ```
 
@@ -79,9 +81,30 @@ npm start
 
 `npm run smoke:browser` membuktikan browser engine STEP 01 pada real Electron: HTTPS navigation, Back, Forward, Reload, controlled navigation failure, dan cleanup `WebContentsView`.
 
+`npm run smoke:step02` membuktikan harness STEP 02 dapat start dengan flag khusus, membuat tepat satu browser surface, mengenali mode manual compatibility, lalu quit bersih tanpa mencoba login atau mengakses credential.
+
+## Menjalankan STEP 02
+
+Setelah semua regression gate di atas PASS:
+
+```bash
+npm run step02
+```
+
+Mode STEP 02 langsung membuka halaman Login Google dan menampilkan shortcut lokal:
+
+```text
+Login Google
+Google
+YouTube
+YouTube Studio
+```
+
+Login, password, 2FA, CAPTCHA/security challenge tetap dilakukan manual oleh pengguna. Mode ini masih memakai session **memory-only**; jangan mengharapkan login bertahan setelah aplikasi ditutup. Persistence baru boleh dibuat di STEP 03 setelah compatibility gate PASS.
+
 ## Yang sudah tersedia
 
-STEP 01 menghasilkan satu browser surface minimal dengan:
+Browser core saat ini mempunyai:
 
 - `BrowserBackend` abstraction;
 - `ElectronBrowserBackend` berbasis `WebContentsView`;
@@ -92,7 +115,8 @@ STEP 01 menghasilkan satu browser surface minimal dengan:
 - sandboxed remote surface;
 - structured navigation logging;
 - explicit browser-surface cleanup;
-- session **in-memory/non-persistent** untuk sementara.
+- shortcut STEP 02 untuk Google/YouTube targets;
+- session **in-memory/non-persistent** untuk compatibility test.
 
 Persistent partition belum diaktifkan karena itu baru dikerjakan setelah Google Login Compatibility Gate PASS.
 
@@ -133,4 +157,6 @@ Setiap profile nantinya menggunakan persistent partition sendiri. Session/cookie
 
 **Fase saat ini: STEP 02 — Google Login Compatibility Gate.**
 
-STEP 02 memerlukan login Google manual pada browser core oleh pengguna yang berwenang atas akun uji. STEP 03 (persistent session) tidak boleh dimulai sampai compatibility gate tersebut terbukti PASS tanpa bypass/anti-detection hack.
+Harness manual STEP 02 sudah disiapkan. Issue #5 tetap OPEN sampai satu login Google manual, Google, YouTube, YouTube Studio, serta Back/Forward/Reload terbukti PASS tanpa bypass/anti-detection hack.
+
+STEP 03 (persistent session) tidak boleh dimulai sampai compatibility gate tersebut PASS.

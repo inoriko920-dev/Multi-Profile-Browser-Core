@@ -59,3 +59,6 @@ jobs:
 
       - name: STEP 01 browser-engine smoke test
         run: npm run smoke:browser
+
+      - name: STEP 02 offline compatibility-harness smoke test
+        run: npm run smoke:step02

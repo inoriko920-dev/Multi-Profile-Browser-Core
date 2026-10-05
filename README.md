@@ -41,6 +41,8 @@ Sebelum implementasi, baca:
 - [`STEP_04_PROFILE_MANAGER.md`](docs/testing/STEP_04_PROFILE_MANAGER.md) — **persiapan saja; BLOCKED sampai STEP 03 PASS**
 - [`STEP_05_MULTI_PROFILE_ISOLATION.md`](docs/testing/STEP_05_MULTI_PROFILE_ISOLATION.md) — **persiapan saja; BLOCKED sampai STEP 04 PASS**
 - [`STEP_06_PROFILE_LAUNCHER.md`](docs/testing/STEP_06_PROFILE_LAUNCHER.md) — **persiapan saja; BLOCKED sampai STEP 05 PASS**
+- [`STEP_07_SHORTCUT_WORKSPACE.md`](docs/testing/STEP_07_SHORTCUT_WORKSPACE.md) — **persiapan saja; BLOCKED sampai STEP 06 PASS**
+- [`STEP_08_RESOURCE_MANAGEMENT.md`](docs/testing/STEP_08_RESOURCE_MANAGEMENT.md) — **persiapan saja; BLOCKED sampai STEP 07 PASS**
 
 Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek. Versi Markdown adalah sumber yang mudah dibaca GitHub, dicari, dibandingkan melalui Git, dan digunakan implementer/AI.
 
@@ -53,8 +55,8 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 - ⛔ STEP 04 — Profile Manager (**prepared, blocked by STEP 03**)
 - ⛔ STEP 05 — Multi-Profile Isolation (**prepared, blocked by STEP 04**)
 - ⛔ STEP 06 — Profile Launcher (**prepared, blocked by STEP 05**)
-- STEP 07 — Shortcut / Workspace
-- STEP 08 — Resource Management
+- ⛔ STEP 07 — Shortcut / Workspace (**prepared, blocked by STEP 06**)
+- ⛔ STEP 08 — Resource Management (**prepared, blocked by STEP 07**)
 - STEP 09 — Recovery System
 - STEP 10 — Logging & Diagnostics
 - STEP 11 — 3 Account Stability Test
@@ -176,6 +178,7 @@ Belum dikerjakan pada fase ini:
 ```text
 App Shell
   ├─ Profile Manager
+  ├─ Runtime Manager
   ├─ BrowserBackend
   │    └─ Electron / Chromium
   ├─ Persistent Session Manager
@@ -185,7 +188,7 @@ App Shell
   └─ AgentBridge (interface saja, implementasi nanti)
 ```
 
-Setiap profile nantinya menggunakan persistent partition sendiri. Session/cookie tidak dipindahkan manual antar profile.
+Setiap profile nantinya menggunakan persistent partition sendiri. Session/cookie tidak dipindahkan manual antar profile. Banyak profile boleh tersimpan, tetapi jumlah runtime hidup dibatasi oleh Runtime Manager.
 
 ## Status
 
@@ -199,8 +202,12 @@ Harness manual STEP 02 sudah disiapkan. Issue #5 tetap OPEN sampai satu login Go
 
 **STEP 03 sudah dipersiapkan, tetapi belum diimplementasikan.** Issue implementasinya harus tetap BLOCKED sampai Issue #5 ditutup sebagai completed.
 
-**STEP 04 juga sudah dipersiapkan sebagai kontrak Profile Manager.** Issue implementasinya harus tetap BLOCKED sampai STEP 03 selesai dan terbukti menjaga persistent session dengan benar.
+**STEP 04 sudah dipersiapkan sebagai kontrak Profile Manager.** Issue implementasinya tetap BLOCKED sampai STEP 03 selesai dan persistent session terbukti stabil.
 
-**STEP 05 sudah dipersiapkan sebagai kontrak Multi-Profile Isolation.** Issue implementasinya harus tetap BLOCKED sampai STEP 04 selesai dan lifecycle profile terbukti stabil.
+**STEP 05 sudah dipersiapkan sebagai kontrak Multi-Profile Isolation.** Issue implementasinya tetap BLOCKED sampai STEP 04 selesai.
 
-**STEP 06 sudah dipersiapkan sebagai kontrak Profile Launcher.** Issue implementasinya harus tetap BLOCKED sampai STEP 05 selesai dan isolation antar profile benar-benar PASS.
+**STEP 06 sudah dipersiapkan sebagai kontrak Profile Launcher.** Issue implementasinya tetap BLOCKED sampai STEP 05 selesai.
+
+**STEP 07 sudah dipersiapkan sebagai kontrak Shortcut / Workspace.** Issue implementasinya tetap BLOCKED sampai STEP 06 selesai.
+
+**STEP 08 sudah dipersiapkan sebagai kontrak Resource Management.** Issue implementasinya tetap BLOCKED sampai STEP 07 selesai. Baseline targetnya menyimpan 100+ profile tanpa menjalankan semuanya bersamaan, dengan `maxActiveRuntimes = 1` terlebih dahulu.

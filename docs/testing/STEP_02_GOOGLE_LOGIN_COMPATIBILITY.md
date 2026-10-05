@@ -12,7 +12,7 @@ STEP ini adalah hard gate. Jangan lanjut STEP 03 bila login Google belum terbukt
 - Jangan masukkan password, OTP, recovery code, cookie, token, atau credential ke log/issue/screenshot.
 - Jangan menambahkan user-agent spoofing, anti-detection, CAPTCHA bypass, cookie injection, atau `webSecurity: false` untuk memaksa login.
 - STEP 02 masih memakai session in-memory/non-persistent. Restart persistence baru diuji di STEP 03.
-- Google dapat menolak authorization flow tertentu di embedded user-agent. Bila muncul error seperti `disallowed_useragent` atau pesan unsupported browser, catat error dan STOP; jangan diakali.
+- Google dapat menolak authorization flow tertentu di embedded user-agent. Bila muncul error seperti `disallowed_useragent`, "browser/app may not be secure", atau pesan unsupported browser, catat error dan STOP; jangan diakali.
 
 ## Persiapan Windows
 
@@ -25,15 +25,44 @@ npm run lint
 npm test
 npm run smoke
 npm run smoke:browser
-npm start
 ```
 
 Pastikan semua command otomatis PASS sebelum login manual dimulai.
 
+## Jalankan mode STEP 02
+
+Gunakan:
+
+```bash
+npm run step02
+```
+
+Mode ini:
+
+- memakai browser surface `WebContentsView` yang sama dengan STEP 01;
+- langsung membuka `https://accounts.google.com/`;
+- tetap memakai session **memory-only**;
+- tidak membaca password, OTP, cookie, atau token;
+- tidak mengotomatisasi login Google;
+- menampilkan shortcut lokal untuk Login Google, Google, YouTube, dan YouTube Studio.
+
+Toolbar STEP 02 mempunyai empat shortcut:
+
+```text
+Login Google
+Google
+YouTube
+YouTube Studio
+```
+
+Semua shortcut memakai **surface/session yang sama**. Shortcut tidak membuat browser profile atau renderer baru.
+
+> Jangan menutup aplikasi di tengah test. Pada STEP 02, login memang boleh hilang setelah app ditutup. Persistence baru menjadi target STEP 03.
+
 ## T02-01 — Buka halaman Google
 
-1. Jalankan `npm start`.
-2. Pada URL bar, buka `https://accounts.google.com/`.
+1. Jalankan `npm run step02`.
+2. App harus langsung membuka `https://accounts.google.com/`.
 3. Pastikan halaman Google tampil di browser surface utama.
 
 **PASS:** halaman autentikasi tampil normal tanpa crash atau error arsitektur.
@@ -51,7 +80,15 @@ Pastikan semua command otomatis PASS sebelum login manual dimulai.
 
 ## T02-03 — Google service access
 
-Setelah login, buka berurutan:
+Setelah login, gunakan tombol shortcut secara berurutan:
+
+```text
+Google
+YouTube
+YouTube Studio
+```
+
+Target yang diuji:
 
 ```text
 https://www.google.com/
@@ -59,7 +96,7 @@ https://www.youtube.com/
 https://studio.youtube.com/
 ```
 
-**PASS:** status login konsisten di ketiga target selama aplikasi masih berjalan.
+**PASS:** status login konsisten di ketiga target selama aplikasi masih berjalan dan halaman target dapat digunakan normal.
 
 Catatan: belum ada kewajiban tetap login setelah app ditutup pada STEP 02.
 
@@ -67,12 +104,12 @@ Catatan: belum ada kewajiban tetap login setelah app ditutup pada STEP 02.
 
 Saat masih login:
 
-1. Back.
-2. Forward.
-3. Reload.
-4. Pindah antara YouTube dan YouTube Studio.
+1. Klik Back.
+2. Klik Forward.
+3. Klik Reload.
+4. Pindah YouTube -> YouTube Studio -> YouTube menggunakan shortcut.
 
-**PASS:** browser tidak crash, akun tidak berubah karena bug aplikasi, dan toolbar tetap bekerja.
+**PASS:** browser tidak crash, akun tidak berubah karena bug aplikasi, history tetap benar, dan toolbar tetap bekerja.
 
 ## T02-05 — Evidence aman
 
@@ -95,6 +132,8 @@ Pesan error non-sensitif jika ada
 Boleh screenshot halaman setelah login bila tidak memuat informasi sensitif; sensor email/nama/channel bila perlu.
 
 Jangan unggah credential atau cookie value.
+
+Log aplikasi boleh dipakai sebagai evidence navigation, tetapi harus tetap mengikuti redaction policy. Event khusus `step02.manual_compatibility_started` hanya mencatat mode test dan tidak berisi data akun.
 
 ## STOP CONDITION
 

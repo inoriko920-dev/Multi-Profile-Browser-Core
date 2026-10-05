@@ -62,3 +62,6 @@ jobs:
 
       - name: STEP 02 offline compatibility-harness smoke test
         run: npm run smoke:step02
+
+      - name: STEP 02 safe evidence helper smoke test
+        run: npm run step02:evidence:ci

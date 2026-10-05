@@ -26,11 +26,14 @@ npm test
 npm run smoke
 npm run smoke:browser
 npm run smoke:step02
+npm run step02:evidence
 ```
 
 Pastikan semua command otomatis PASS sebelum login manual dimulai.
 
 `npm run smoke:step02` adalah test offline untuk harness saja. Test ini memastikan flag `--step02`, shell lokal, satu browser surface, logging mode, dan clean shutdown bekerja. Test ini **tidak** mengakses Google dan tidak mencoba login.
+
+`npm run step02:evidence` membuat template Markdown lokal di `evidence/step02/`. Folder `evidence/` diabaikan Git supaya catatan manual tidak ikut ter-commit tanpa sengaja. Template otomatis mencatat environment aman seperti OS, Node, versi paket Electron, branch, dan commit SHA, tetapi tidak membaca credential/browser storage.
 
 ## Jalankan mode STEP 02
 
@@ -116,13 +119,18 @@ Saat masih login:
 
 ## T02-05 — Evidence aman
 
-Catat hanya:
+Sebelum test manual, buat template lokal:
+
+```bash
+npm run step02:evidence
+```
+
+Template hanya boleh berisi:
 
 ```text
 OS
 commit SHA
-Electron version
-Chromium version
+Electron package version
 Node version
 Tanggal test
 T02-01 PASS/FAIL
@@ -137,6 +145,8 @@ Boleh screenshot halaman setelah login bila tidak memuat informasi sensitif; sen
 Jangan unggah credential atau cookie value.
 
 Log aplikasi boleh dipakai sebagai evidence navigation, tetapi harus tetap mengikuti redaction policy. Event khusus `step02.manual_compatibility_started` hanya mencatat mode test dan tidak berisi data akun.
+
+Folder `evidence/` adalah data lokal dan sengaja di-ignore oleh Git. Jika evidence perlu dimasukkan ke issue, salin hanya PASS/FAIL dan error non-sensitif yang relevan.
 
 ## STOP CONDITION
 

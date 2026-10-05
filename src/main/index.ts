@@ -61,6 +61,39 @@ function createApplicationWindow(): BrowserWindowType {
 
   const controller = createBrowserController(window, logger);
 
+  if (process.env.MPBC_STEP02_HARNESS_SMOKE === '1') {
+    const finishHarnessSmoke = (): void => {
+      try {
+        if (!isStep02CompatibilityMode) {
+          throw new Error('STEP 02 harness smoke requires --step02.');
+        }
+
+        const surfaceCount = controller.backend.getSurfaceCount();
+        if (surfaceCount !== 1) {
+          throw new Error(`Expected one browser surface, got ${surfaceCount}.`);
+        }
+
+        logger?.info('step02.harness_smoke_pass', {
+          surfaceCount,
+          remoteLoginAttempted: false,
+        });
+        controller.cleanup();
+        app.quit();
+      } catch (error) {
+        controller.cleanup();
+        exitAfterFatal('step02.harness_smoke_failed', error);
+      }
+    };
+
+    if (window.webContents.isLoading()) {
+      window.webContents.once('did-finish-load', finishHarnessSmoke);
+    } else {
+      queueMicrotask(finishHarnessSmoke);
+    }
+
+    return window;
+  }
+
   if (process.env.MPBC_STEP01_SMOKE === '1') {
     void runStep01Smoke(window, controller.backend, logger)
       .then(() => {

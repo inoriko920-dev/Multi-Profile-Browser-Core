@@ -39,6 +39,7 @@ Sebelum implementasi, baca:
 - [`STEP_02_GOOGLE_LOGIN_COMPATIBILITY.md`](docs/testing/STEP_02_GOOGLE_LOGIN_COMPATIBILITY.md)
 - [`STEP_03_PERSISTENT_SINGLE_PROFILE.md`](docs/testing/STEP_03_PERSISTENT_SINGLE_PROFILE.md) — **persiapan saja; BLOCKED sampai STEP 02 PASS**
 - [`STEP_04_PROFILE_MANAGER.md`](docs/testing/STEP_04_PROFILE_MANAGER.md) — **persiapan saja; BLOCKED sampai STEP 03 PASS**
+- [`STEP_05_MULTI_PROFILE_ISOLATION.md`](docs/testing/STEP_05_MULTI_PROFILE_ISOLATION.md) — **persiapan saja; BLOCKED sampai STEP 04 PASS**
 
 Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek. Versi Markdown adalah sumber yang mudah dibaca GitHub, dicari, dibandingkan melalui Git, dan digunakan implementer/AI.
 
@@ -49,7 +50,7 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 - ⏳ STEP 02 — Google Login Compatibility Gate
 - ⛔ STEP 03 — Persistent Profile (**prepared, blocked by STEP 02**)
 - ⛔ STEP 04 — Profile Manager (**prepared, blocked by STEP 03**)
-- STEP 05 — Multi-Profile Isolation
+- ⛔ STEP 05 — Multi-Profile Isolation (**prepared, blocked by STEP 04**)
 - STEP 06 — Profile Launcher
 - STEP 07 — Shortcut / Workspace
 - STEP 08 — Resource Management
@@ -198,3 +199,5 @@ Harness manual STEP 02 sudah disiapkan. Issue #5 tetap OPEN sampai satu login Go
 **STEP 03 sudah dipersiapkan, tetapi belum diimplementasikan.** Issue implementasinya harus tetap BLOCKED sampai Issue #5 ditutup sebagai completed.
 
 **STEP 04 juga sudah dipersiapkan sebagai kontrak Profile Manager.** Issue implementasinya harus tetap BLOCKED sampai STEP 03 selesai dan terbukti menjaga persistent session dengan benar.
+
+**STEP 05 sudah dipersiapkan sebagai kontrak Multi-Profile Isolation.** Issue implementasinya harus tetap BLOCKED sampai STEP 04 selesai dan lifecycle profile terbukti stabil.

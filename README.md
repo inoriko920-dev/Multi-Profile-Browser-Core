@@ -41,9 +41,9 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 
 ## Roadmap implementasi
 
-- STEP 00 — Project Foundation
-- STEP 01 — Minimal Browser Engine
-- STEP 02 — Google Login Compatibility Gate
+- ✅ STEP 00 — Project Foundation
+- ✅ STEP 01 — Minimal Browser Engine
+- ⏳ STEP 02 — Google Login Compatibility Gate
 - STEP 03 — Persistent Profile
 - STEP 04 — Profile Manager
 - STEP 05 — Multi-Profile Isolation
@@ -61,9 +61,9 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 
 **Aturan keras:** STEP berikutnya tidak boleh dianggap selesai bila acceptance test STEP sebelumnya masih gagal.
 
-## STEP 00 — local development
+## Local development
 
-Baseline STEP 00 memakai Node.js 24 dan dependency yang dipin exact di `package.json` / `package-lock.json`.
+Baseline memakai Node.js 24 dan dependency yang dipin exact di `package.json` / `package-lock.json`.
 
 ```bash
 npm ci
@@ -71,12 +71,30 @@ npm run typecheck
 npm run lint
 npm test
 npm run smoke
+npm run smoke:browser
 npm start
 ```
 
-Pada STEP 00, aplikasi hanya boleh membuka renderer lokal. Tidak ada remote website, login account, profile browser, atau AI agent.
+`npm run smoke` membuktikan bootstrap + clean-shutdown STEP 00.
 
-`npm run smoke` menjalankan Electron, menunggu renderer lokal selesai dimuat, lalu menutup aplikasi secara bersih. GitHub Actions menjalankan gate ini di Windows.
+`npm run smoke:browser` membuktikan browser engine STEP 01 pada real Electron: HTTPS navigation, Back, Forward, Reload, controlled navigation failure, dan cleanup `WebContentsView`.
+
+## Yang sudah tersedia
+
+STEP 01 menghasilkan satu browser surface minimal dengan:
+
+- `BrowserBackend` abstraction;
+- `ElectronBrowserBackend` berbasis `WebContentsView`;
+- URL bar;
+- Back / Forward / Reload;
+- HTTP(S)-only URL policy;
+- validated shell IPC;
+- sandboxed remote surface;
+- structured navigation logging;
+- explicit browser-surface cleanup;
+- session **in-memory/non-persistent** untuk sementara.
+
+Persistent partition belum diaktifkan karena itu baru dikerjakan setelah Google Login Compatibility Gate PASS.
 
 ## Non-goals fase pondasi
 
@@ -105,10 +123,14 @@ App Shell
   └─ AgentBridge (interface saja, implementasi nanti)
 ```
 
-Setiap profile menggunakan persistent partition sendiri. Session/cookie tidak dipindahkan manual antar profile.
+Setiap profile nantinya menggunakan persistent partition sendiri. Session/cookie tidak dipindahkan manual antar profile.
 
 ## Status
 
-**Fase saat ini: STEP 00 — Repository Foundation / Validation.**
+**STEP 00: PASS.** Repository foundation, logging, recovery marker, strict toolchain, unit test, dan real Electron clean-shutdown smoke sudah lolos Windows CI.
 
-Source code pondasi sudah dimulai. STEP 01 belum boleh dimulai sampai Issue `STEP 00 — Repository Foundation` memenuhi seluruh acceptance gate dan CI Windows PASS, termasuk Electron start-load-quit smoke test.
+**STEP 01: PASS.** Minimal `WebContentsView` browser engine, navigation, history, URL validation, security boundary, dan cleanup sudah lolos Windows CI. PR #4 sudah di-merge.
+
+**Fase saat ini: STEP 02 — Google Login Compatibility Gate.**
+
+STEP 02 memerlukan login Google manual pada browser core oleh pengguna yang berwenang atas akun uji. STEP 03 (persistent session) tidak boleh dimulai sampai compatibility gate tersebut terbukti PASS tanpa bypass/anti-detection hack.

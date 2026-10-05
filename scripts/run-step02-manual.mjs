@@ -1,7 +1,7 @@
 import { spawnSync } from 'node:child_process';
 
 const dryRun = process.argv.includes('--dry-run');
-const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+const probeNpm = process.argv.includes('--probe-npm');
 
 const steps = [
   ['Install dependencies', ['ci']],
@@ -25,21 +25,42 @@ function printHeader() {
   console.log('');
 }
 
-function runStep(index, label, args) {
-  const position = `${index + 1}/${steps.length}`;
-  console.log(`\n[${position}] ${label}`);
-  console.log(`> npm ${args.join(' ')}`);
-
-  if (dryRun) {
-    return;
+function resolveNpmInvocation(args) {
+  // When this runner is started by an npm script, npm_execpath points to
+  // npm-cli.js. Running it through the current Node executable avoids trying
+  // to spawn npm.cmd directly on Windows, which can fail with EINVAL.
+  if (process.env.npm_execpath) {
+    return {
+      command: process.execPath,
+      args: [process.env.npm_execpath, ...args],
+    };
   }
 
-  const result = spawnSync(npmCommand, args, {
+  // Fallback for someone running this file directly with `node ...` instead
+  // of through `npm run`. On Windows, route the .cmd shim through cmd.exe.
+  if (process.platform === 'win32') {
+    return {
+      command: process.env.ComSpec ?? process.env.COMSPEC ?? 'cmd.exe',
+      args: ['/d', '/s', '/c', 'npm.cmd', ...args],
+    };
+  }
+
+  return {
+    command: 'npm',
+    args,
+  };
+}
+
+function spawnNpm(args) {
+  const invocation = resolveNpmInvocation(args);
+  return spawnSync(invocation.command, invocation.args, {
     cwd: process.cwd(),
     env: process.env,
     stdio: 'inherit',
   });
+}
 
+function assertSpawnResult(result, label) {
   if (result.error) {
     throw result.error;
   }
@@ -53,9 +74,28 @@ function runStep(index, label, args) {
   }
 }
 
+function runStep(index, label, args) {
+  const position = `${index + 1}/${steps.length}`;
+  console.log(`\n[${position}] ${label}`);
+  console.log(`> npm ${args.join(' ')}`);
+
+  if (dryRun) {
+    return;
+  }
+
+  assertSpawnResult(spawnNpm(args), label);
+}
+
 printHeader();
 
 try {
+  if (probeNpm) {
+    console.log('[probe] Verifikasi invokasi npm Windows/cross-platform...');
+    console.log('> npm --version');
+    assertSpawnResult(spawnNpm(['--version']), 'npm invocation probe');
+    console.log('[probe] PASS: npm child process dapat dijalankan.');
+  }
+
   steps.forEach(([label, args], index) => runStep(index, label, args));
 
   if (dryRun) {

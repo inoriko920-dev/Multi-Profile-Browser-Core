@@ -61,6 +61,23 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 
 **Aturan keras:** STEP berikutnya tidak boleh dianggap selesai bila acceptance test STEP sebelumnya masih gagal.
 
+## STEP 00 — local development
+
+Baseline STEP 00 memakai Node.js 24 dan dependency yang dipin exact di `package.json` / `package-lock.json`.
+
+```bash
+npm ci
+npm run typecheck
+npm run lint
+npm test
+npm run smoke
+npm start
+```
+
+Pada STEP 00, aplikasi hanya boleh membuka renderer lokal. Tidak ada remote website, login account, profile browser, atau AI agent.
+
+`npm run smoke` menjalankan Electron, menunggu renderer lokal selesai dimuat, lalu menutup aplikasi secara bersih. GitHub Actions menjalankan gate ini di Windows.
+
 ## Non-goals fase pondasi
 
 Belum dikerjakan pada fase ini:
@@ -92,6 +109,6 @@ Setiap profile menggunakan persistent partition sendiri. Session/cookie tidak di
 
 ## Status
 
-**Fase saat ini: Planning / Foundation Preparation**
+**Fase saat ini: STEP 00 — Repository Foundation / Validation.**
 
-Implementasi source code belum boleh dianggap dimulai sebelum STEP 00 mengikuti Master Plan dan Test Plan.
+Source code pondasi sudah dimulai. STEP 01 belum boleh dimulai sampai Issue `STEP 00 — Repository Foundation` memenuhi seluruh acceptance gate dan CI Windows PASS, termasuk Electron start-load-quit smoke test.

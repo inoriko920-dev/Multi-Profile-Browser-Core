@@ -1,0 +1,55 @@
+name: STEP 00 Foundation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Bootstrap lockfile when missing
+        shell: pwsh
+        run: |
+          if (-not (Test-Path package-lock.json)) {
+            npm install --package-lock-only --ignore-scripts
+          }
+
+      - name: Commit generated lockfile
+        if: github.event_name == 'push'
+        shell: pwsh
+        run: |
+          if (git status --porcelain package-lock.json) {
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add package-lock.json
+            git commit -m "step00: generate reproducible npm lockfile"
+            git push
+          }
+
+      - name: Install from lockfile
+        run: npm ci --ignore-scripts
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test

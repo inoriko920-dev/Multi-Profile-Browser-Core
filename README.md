@@ -75,6 +75,7 @@ npm test
 npm run smoke
 npm run smoke:browser
 npm run smoke:step02
+npm run step02:manual:ci
 npm start
 ```
 
@@ -84,9 +85,41 @@ npm start
 
 `npm run smoke:step02` membuktikan harness STEP 02 dapat start dengan flag khusus, membuat tepat satu browser surface, mengenali mode manual compatibility, lalu quit bersih tanpa mencoba login atau mengakses credential.
 
-## Menjalankan STEP 02
+`npm run step02:manual:ci` hanya memvalidasi urutan one-click runner tanpa membuka login Google.
 
-Setelah semua regression gate di atas PASS:
+## Cara termudah menjalankan STEP 02 di Windows
+
+Setelah `git pull`, cukup double-click:
+
+```text
+RUN_STEP02_TEST.bat
+```
+
+Launcher tersebut akan menjalankan secara berurutan:
+
+```text
+npm ci
+→ typecheck
+→ lint
+→ unit tests
+→ STEP 00 smoke
+→ STEP 01 browser smoke
+→ STEP 02 offline smoke
+→ membuat evidence lokal
+→ membuka STEP 02 untuk login Google manual
+```
+
+Jika satu gate gagal, launcher **STOP** dan tidak melanjutkan ke login. Password, OTP, cookie, token, dan recovery code tidak dibaca atau disimpan oleh launcher.
+
+Alternatif melalui terminal:
+
+```bash
+npm run step02:manual
+```
+
+## Menjalankan STEP 02 secara langsung
+
+Jika semua regression gate sudah PASS dan hanya ingin membuka browser test:
 
 ```bash
 npm run step02
@@ -117,6 +150,7 @@ Browser core saat ini mempunyai:
 - structured navigation logging;
 - explicit browser-surface cleanup;
 - shortcut STEP 02 untuk Google/YouTube targets;
+- one-click Windows runner untuk STEP 02;
 - session **in-memory/non-persistent** untuk compatibility test.
 
 Persistent partition **belum diaktifkan**. STEP 03 baru disiapkan sebagai dokumen/issue dan tetap diblokir sampai Google Login Compatibility Gate PASS.

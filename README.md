@@ -43,6 +43,7 @@ Sebelum implementasi, baca:
 - [`STEP_06_PROFILE_LAUNCHER.md`](docs/testing/STEP_06_PROFILE_LAUNCHER.md) — **persiapan saja; BLOCKED sampai STEP 05 PASS**
 - [`STEP_07_SHORTCUT_WORKSPACE.md`](docs/testing/STEP_07_SHORTCUT_WORKSPACE.md) — **persiapan saja; BLOCKED sampai STEP 06 PASS**
 - [`STEP_08_RESOURCE_MANAGEMENT.md`](docs/testing/STEP_08_RESOURCE_MANAGEMENT.md) — **persiapan saja; BLOCKED sampai STEP 07 PASS**
+- [`STEP_09_RECOVERY_SYSTEM.md`](docs/testing/STEP_09_RECOVERY_SYSTEM.md) — **persiapan saja; BLOCKED sampai STEP 08 PASS**
 
 Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek. Versi Markdown adalah sumber yang mudah dibaca GitHub, dicari, dibandingkan melalui Git, dan digunakan implementer/AI.
 
@@ -57,7 +58,7 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 - ⛔ STEP 06 — Profile Launcher (**prepared, blocked by STEP 05**)
 - ⛔ STEP 07 — Shortcut / Workspace (**prepared, blocked by STEP 06**)
 - ⛔ STEP 08 — Resource Management (**prepared, blocked by STEP 07**)
-- STEP 09 — Recovery System
+- ⛔ STEP 09 — Recovery System (**prepared, blocked by STEP 08**)
 - STEP 10 — Logging & Diagnostics
 - STEP 11 — 3 Account Stability Test
 - STEP 12 — 10 Profile Test
@@ -183,8 +184,8 @@ App Shell
   │    └─ Electron / Chromium
   ├─ Persistent Session Manager
   ├─ Workspace / Shortcut Manager
-  ├─ Logging & Diagnostics
   ├─ Recovery Manager
+  ├─ Logging & Diagnostics
   └─ AgentBridge (interface saja, implementasi nanti)
 ```
 
@@ -211,3 +212,5 @@ Harness manual STEP 02 sudah disiapkan. Issue #5 tetap OPEN sampai satu login Go
 **STEP 07 sudah dipersiapkan sebagai kontrak Shortcut / Workspace.** Issue implementasinya tetap BLOCKED sampai STEP 06 selesai.
 
 **STEP 08 sudah dipersiapkan sebagai kontrak Resource Management.** Issue implementasinya tetap BLOCKED sampai STEP 07 selesai. Baseline targetnya menyimpan 100+ profile tanpa menjalankan semuanya bersamaan, dengan `maxActiveRuntimes = 1` terlebih dahulu.
+
+**STEP 09 sudah dipersiapkan sebagai kontrak Recovery System.** Issue implementasinya tetap BLOCKED sampai STEP 08 selesai. Recovery wajib memakai `render-process-gone` untuk renderer, `child-process-gone` untuk GPU/utility process, bounded retry, unclean-shutdown detection, dan safe mode tanpa mengganti profile/partition.

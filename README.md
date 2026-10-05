@@ -47,6 +47,7 @@ Sebelum implementasi, baca:
 - [`STEP_10_LOGGING_DIAGNOSTICS.md`](docs/testing/STEP_10_LOGGING_DIAGNOSTICS.md) — **persiapan saja; BLOCKED sampai STEP 09 PASS**
 - [`STEP_11_3_ACCOUNT_STABILITY_TEST.md`](docs/testing/STEP_11_3_ACCOUNT_STABILITY_TEST.md) — **persiapan saja; BLOCKED sampai STEP 10 PASS**
 - [`STEP_12_10_PROFILE_TEST.md`](docs/testing/STEP_12_10_PROFILE_TEST.md) — **persiapan saja; BLOCKED sampai STEP 11 PASS**
+- [`STEP_13_25_PROFILE_TEST.md`](docs/testing/STEP_13_25_PROFILE_TEST.md) — **persiapan saja; BLOCKED sampai STEP 12 PASS**
 
 Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek. Versi Markdown adalah sumber yang mudah dibaca GitHub, dicari, dibandingkan melalui Git, dan digunakan implementer/AI.
 
@@ -65,7 +66,7 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 - ⛔ STEP 10 — Logging & Diagnostics (**prepared, blocked by STEP 09**)
 - ⛔ STEP 11 — 3 Account Stability Test (**prepared, blocked by STEP 10**)
 - ⛔ STEP 12 — 10 Profile Test (**prepared, blocked by STEP 11**)
-- STEP 13 — 25 Profile Test
+- ⛔ STEP 13 — 25 Profile Test (**prepared, blocked by STEP 12**)
 - STEP 14 — 50 Profile Test
 - STEP 15 — 100 Profile Registry Test
 - STEP 16 — Foundation v1.0 Freeze
@@ -224,3 +225,5 @@ Harness manual STEP 02 sudah disiapkan. Issue #5 tetap OPEN sampai satu login Go
 **STEP 11 sudah dipersiapkan sebagai 3 Account Stability Test.** Issue implementasinya tetap BLOCKED sampai STEP 10 selesai. Gate ini memakai tiga profile/account nyata untuk membuktikan persistence, isolation, switching, runtime cap, recovery, unclean-shutdown handling, dan diagnostics end-to-end sebelum scale test 10/25/50/100 profile.
 
 **STEP 12 sudah dipersiapkan sebagai 10 Profile Test.** Issue implementasinya tetap BLOCKED sampai STEP 11 selesai. Gate ini memakai tiga real-account profile dari STEP 11 ditambah tujuh test profile, menguji 10-profile registry persistence, 100+ deterministic switches, lifecycle operations, hard runtime cap, recovery, diagnostics, resource behavior, dan secret scan tanpa mewajibkan 10 akun nyata.
+
+**STEP 13 sudah dipersiapkan sebagai 25 Profile Test.** Issue implementasinya tetap BLOCKED sampai STEP 12 selesai. Gate ini memakai tiga real-account profile sebagai canary dan 22 test profile, menguji 25-profile registry persistence, 250+ deterministic switches, lifecycle mutation lintas rentang, hard runtime cap, background inactivity, recovery, diagnostics, resource trends, registry invariants, dan secret scan tanpa mewajibkan 25 akun nyata.

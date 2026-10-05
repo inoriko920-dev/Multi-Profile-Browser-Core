@@ -25,16 +25,21 @@ declare global {
   }
 }
 
-const backButton = document.querySelector<HTMLButtonElement>('#back');
-const forwardButton = document.querySelector<HTMLButtonElement>('#forward');
-const reloadButton = document.querySelector<HTMLButtonElement>('#reload');
-const form = document.querySelector<HTMLFormElement>('#navigation-form');
-const addressInput = document.querySelector<HTMLInputElement>('#address');
-const status = document.querySelector<HTMLDivElement>('#status');
+function requireElement<T extends Element>(selector: string): T {
+  const element = document.querySelector<T>(selector);
+  if (!element) {
+    throw new Error(`Required browser toolbar element is missing: ${selector}`);
+  }
 
-if (!backButton || !forwardButton || !reloadButton || !form || !addressInput || !status) {
-  throw new Error('Browser toolbar elements are missing.');
+  return element;
 }
+
+const backButton = requireElement<HTMLButtonElement>('#back');
+const forwardButton = requireElement<HTMLButtonElement>('#forward');
+const reloadButton = requireElement<HTMLButtonElement>('#reload');
+const form = requireElement<HTMLFormElement>('#navigation-form');
+const addressInput = requireElement<HTMLInputElement>('#address');
+const status = requireElement<HTMLDivElement>('#status');
 
 function renderState(state: BrowserState): void {
   backButton.disabled = !state.canGoBack || state.isLoading;

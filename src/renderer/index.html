@@ -15,17 +15,20 @@
       * { box-sizing: border-box; }
       html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; }
       body { background: #f4f7fb; }
+      .shell-header {
+        height: 118px;
+        background: #ffffff;
+        border-bottom: 1px solid #dce5f2;
+      }
       .toolbar {
-        height: 76px;
+        height: 74px;
         display: grid;
         grid-template-columns: auto minmax(240px, 1fr) auto;
         gap: 12px;
         align-items: center;
-        padding: 12px 16px;
-        background: #ffffff;
-        border-bottom: 1px solid #dce5f2;
+        padding: 10px 16px;
       }
-      .brand { display: flex; flex-direction: column; min-width: 170px; }
+      .brand { display: flex; flex-direction: column; min-width: 180px; }
       .brand strong { font-size: 14px; line-height: 1.2; }
       .brand span { margin-top: 3px; font-size: 11px; color: #6b7c93; }
       .nav { display: flex; align-items: center; gap: 8px; }
@@ -56,27 +59,82 @@
       input:focus { border-color: #2d6cdf; box-shadow: 0 0 0 3px rgba(45,108,223,0.12); background: #ffffff; }
       .status { min-width: 108px; text-align: right; font-size: 11px; color: #6b7c93; }
       .status[data-error="true"] { color: #b42318; }
-      .underlay { height: calc(100vh - 76px); display: grid; place-items: center; color: #8290a3; font-size: 13px; }
+      .gatebar {
+        height: 44px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border-top: 1px solid #edf1f7;
+        background: #f8fbff;
+        overflow: hidden;
+      }
+      .gate-label {
+        display: flex;
+        align-items: baseline;
+        gap: 7px;
+        flex: 0 0 auto;
+        margin-right: 4px;
+        white-space: nowrap;
+      }
+      .gate-label strong { font-size: 11px; color: #1f5fc4; }
+      .gate-label span { font-size: 10px; color: #6b7c93; }
+      .quick-target {
+        height: 30px;
+        min-width: auto;
+        padding: 0 10px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .quick-target[data-active="true"] {
+        background: #e5efff;
+        border-color: #7ba7ea;
+        color: #174f9f;
+      }
+      .manual-note {
+        margin-left: auto;
+        font-size: 10px;
+        color: #7a8798;
+        white-space: nowrap;
+      }
+      .underlay { height: calc(100vh - 118px); display: grid; place-items: center; color: #8290a3; font-size: 13px; }
     </style>
   </head>
   <body>
-    <header class="toolbar">
-      <div class="brand">
-        <strong>Multi-Profile Browser Core</strong>
-        <span>STEP 01 · Minimal Browser Engine</span>
+    <header class="shell-header">
+      <div class="toolbar">
+        <div class="brand">
+          <strong>Multi-Profile Browser Core</strong>
+          <span>STEP 02 · Google Login Compatibility Gate</span>
+        </div>
+
+        <div class="nav">
+          <button id="back" type="button" title="Kembali" disabled>←</button>
+          <button id="forward" type="button" title="Maju" disabled>→</button>
+          <button id="reload" type="button" title="Muat ulang">↻</button>
+          <form id="navigation-form">
+            <input id="address" type="text" inputmode="url" autocomplete="off" spellcheck="false" aria-label="Alamat website" placeholder="example.com" />
+          </form>
+        </div>
+
+        <div id="status" class="status">Siap</div>
       </div>
 
-      <div class="nav">
-        <button id="back" type="button" title="Kembali" disabled>←</button>
-        <button id="forward" type="button" title="Maju" disabled>→</button>
-        <button id="reload" type="button" title="Muat ulang">↻</button>
-        <form id="navigation-form">
-          <input id="address" type="text" inputmode="url" autocomplete="off" spellcheck="false" aria-label="Alamat website" placeholder="example.com" />
-        </form>
+      <div class="gatebar" aria-label="Shortcut uji kompatibilitas Google">
+        <div class="gate-label">
+          <strong>UJI MANUAL</strong>
+          <span>1 akun · session sementara</span>
+        </div>
+        <button class="quick-target" type="button" data-step02-url="https://accounts.google.com/">Login Google</button>
+        <button class="quick-target" type="button" data-step02-url="https://www.google.com/">Google</button>
+        <button class="quick-target" type="button" data-step02-url="https://www.youtube.com/">YouTube</button>
+        <button class="quick-target" type="button" data-step02-url="https://studio.youtube.com/">YouTube Studio</button>
+        <span class="manual-note">Password / 2FA tetap diketik manual</span>
       </div>
-
-      <div id="status" class="status">Siap</div>
     </header>
+
     <main class="underlay" aria-hidden="true">Browser surface</main>
     <script src="./index.js" defer></script>
   </body>

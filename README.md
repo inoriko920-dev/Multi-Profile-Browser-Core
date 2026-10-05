@@ -45,6 +45,7 @@ Sebelum implementasi, baca:
 - [`STEP_08_RESOURCE_MANAGEMENT.md`](docs/testing/STEP_08_RESOURCE_MANAGEMENT.md) — **persiapan saja; BLOCKED sampai STEP 07 PASS**
 - [`STEP_09_RECOVERY_SYSTEM.md`](docs/testing/STEP_09_RECOVERY_SYSTEM.md) — **persiapan saja; BLOCKED sampai STEP 08 PASS**
 - [`STEP_10_LOGGING_DIAGNOSTICS.md`](docs/testing/STEP_10_LOGGING_DIAGNOSTICS.md) — **persiapan saja; BLOCKED sampai STEP 09 PASS**
+- [`STEP_11_3_ACCOUNT_STABILITY_TEST.md`](docs/testing/STEP_11_3_ACCOUNT_STABILITY_TEST.md) — **persiapan saja; BLOCKED sampai STEP 10 PASS**
 
 Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek. Versi Markdown adalah sumber yang mudah dibaca GitHub, dicari, dibandingkan melalui Git, dan digunakan implementer/AI.
 
@@ -61,7 +62,7 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 - ⛔ STEP 08 — Resource Management (**prepared, blocked by STEP 07**)
 - ⛔ STEP 09 — Recovery System (**prepared, blocked by STEP 08**)
 - ⛔ STEP 10 — Logging & Diagnostics (**prepared, blocked by STEP 09**)
-- STEP 11 — 3 Account Stability Test
+- ⛔ STEP 11 — 3 Account Stability Test (**prepared, blocked by STEP 10**)
 - STEP 12 — 10 Profile Test
 - STEP 13 — 25 Profile Test
 - STEP 14 — 50 Profile Test
@@ -218,3 +219,5 @@ Harness manual STEP 02 sudah disiapkan. Issue #5 tetap OPEN sampai satu login Go
 **STEP 09 sudah dipersiapkan sebagai kontrak Recovery System.** Issue implementasinya tetap BLOCKED sampai STEP 08 selesai. Recovery wajib memakai `render-process-gone` untuk renderer, `child-process-gone` untuk GPU/utility process, bounded retry, unclean-shutdown detection, dan safe mode tanpa mengganti profile/partition.
 
 **STEP 10 sudah dipersiapkan sebagai kontrak Logging & Diagnostics.** Issue implementasinya tetap BLOCKED sampai STEP 09 selesai. Fokusnya adalah structured logging, centralized secret redaction, bounded retention, Electron process metrics, safe diagnostic bundle, dan secret scan tanpa membaca cookie/token/DOM.
+
+**STEP 11 sudah dipersiapkan sebagai 3 Account Stability Test.** Issue implementasinya tetap BLOCKED sampai STEP 10 selesai. Gate ini memakai tiga profile/account nyata untuk membuktikan persistence, isolation, switching, runtime cap, recovery, unclean-shutdown handling, dan diagnostics end-to-end sebelum scale test 10/25/50/100 profile.

@@ -18,6 +18,8 @@
     "smoke:browser": "npm run build && node scripts/smoke-browser-engine.mjs",
     "smoke:step02": "npm run build && node scripts/smoke-step02-harness.mjs",
     "step02": "npm run build && electron . --step02",
+    "step02:evidence": "node scripts/step02-evidence.mjs",
+    "step02:evidence:ci": "node scripts/step02-evidence.mjs --ci",
     "start": "npm run build && electron .",
     "dev": "npm run start"
   },

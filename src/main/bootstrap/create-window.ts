@@ -12,7 +12,7 @@ export function createFoundationWindow(logger: FileLogger): BrowserWindow {
     backgroundColor: '#f6f8fb',
     autoHideMenuBar: true,
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../../preload/index.js'),
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: true,
@@ -31,7 +31,7 @@ export function createFoundationWindow(logger: FileLogger): BrowserWindow {
   });
 
   void window
-    .loadFile(join(__dirname, '../renderer/index.html'))
+    .loadFile(join(__dirname, '../../renderer/index.html'))
     .catch((error: unknown) => logger.error('renderer.load_failed', { error }));
 
   return window;

@@ -44,6 +44,7 @@ Sebelum implementasi, baca:
 - [`STEP_07_SHORTCUT_WORKSPACE.md`](docs/testing/STEP_07_SHORTCUT_WORKSPACE.md) — **persiapan saja; BLOCKED sampai STEP 06 PASS**
 - [`STEP_08_RESOURCE_MANAGEMENT.md`](docs/testing/STEP_08_RESOURCE_MANAGEMENT.md) — **persiapan saja; BLOCKED sampai STEP 07 PASS**
 - [`STEP_09_RECOVERY_SYSTEM.md`](docs/testing/STEP_09_RECOVERY_SYSTEM.md) — **persiapan saja; BLOCKED sampai STEP 08 PASS**
+- [`STEP_10_LOGGING_DIAGNOSTICS.md`](docs/testing/STEP_10_LOGGING_DIAGNOSTICS.md) — **persiapan saja; BLOCKED sampai STEP 09 PASS**
 
 Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek. Versi Markdown adalah sumber yang mudah dibaca GitHub, dicari, dibandingkan melalui Git, dan digunakan implementer/AI.
 
@@ -59,7 +60,7 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 - ⛔ STEP 07 — Shortcut / Workspace (**prepared, blocked by STEP 06**)
 - ⛔ STEP 08 — Resource Management (**prepared, blocked by STEP 07**)
 - ⛔ STEP 09 — Recovery System (**prepared, blocked by STEP 08**)
-- STEP 10 — Logging & Diagnostics
+- ⛔ STEP 10 — Logging & Diagnostics (**prepared, blocked by STEP 09**)
 - STEP 11 — 3 Account Stability Test
 - STEP 12 — 10 Profile Test
 - STEP 13 — 25 Profile Test
@@ -185,7 +186,8 @@ App Shell
   ├─ Persistent Session Manager
   ├─ Workspace / Shortcut Manager
   ├─ Recovery Manager
-  ├─ Logging & Diagnostics
+  ├─ Structured Logger
+  ├─ Diagnostics Service
   └─ AgentBridge (interface saja, implementasi nanti)
 ```
 
@@ -214,3 +216,5 @@ Harness manual STEP 02 sudah disiapkan. Issue #5 tetap OPEN sampai satu login Go
 **STEP 08 sudah dipersiapkan sebagai kontrak Resource Management.** Issue implementasinya tetap BLOCKED sampai STEP 07 selesai. Baseline targetnya menyimpan 100+ profile tanpa menjalankan semuanya bersamaan, dengan `maxActiveRuntimes = 1` terlebih dahulu.
 
 **STEP 09 sudah dipersiapkan sebagai kontrak Recovery System.** Issue implementasinya tetap BLOCKED sampai STEP 08 selesai. Recovery wajib memakai `render-process-gone` untuk renderer, `child-process-gone` untuk GPU/utility process, bounded retry, unclean-shutdown detection, dan safe mode tanpa mengganti profile/partition.
+
+**STEP 10 sudah dipersiapkan sebagai kontrak Logging & Diagnostics.** Issue implementasinya tetap BLOCKED sampai STEP 09 selesai. Fokusnya adalah structured logging, centralized secret redaction, bounded retention, Electron process metrics, safe diagnostic bundle, dan secret scan tanpa membaca cookie/token/DOM.

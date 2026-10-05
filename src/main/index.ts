@@ -66,7 +66,14 @@ void app
       runtime: getFoundationInfo(),
     });
 
-    createFoundationWindow(logger);
+    const window = createFoundationWindow(logger);
+
+    if (process.env.MPBC_SMOKE_TEST === '1') {
+      window.webContents.once('did-finish-load', () => {
+        logger?.info('app.smoke_test_pass');
+        app.quit();
+      });
+    }
 
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0 && logger) {

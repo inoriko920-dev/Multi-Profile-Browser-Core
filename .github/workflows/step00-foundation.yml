@@ -65,3 +65,9 @@ jobs:
 
       - name: STEP 02 safe evidence helper smoke test
         run: npm run step02:evidence:ci
+
+      - name: STEP 02 one-click Windows batch dry-run
+        shell: cmd
+        env:
+          MPBC_STEP02_RUNNER_CI: '1'
+        run: RUN_STEP02_TEST.bat

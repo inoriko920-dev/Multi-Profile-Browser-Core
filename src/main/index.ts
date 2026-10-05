@@ -6,6 +6,11 @@ import { getFoundationInfo } from './bootstrap/runtime-info';
 import { FileLogger, normalizeError } from './logging/file-logger';
 import { ShutdownState } from './recovery/shutdown-state';
 
+const requestedUserDataPath = process.env.MPBC_USER_DATA_DIR;
+if (requestedUserDataPath) {
+  app.setPath('userData', requestedUserDataPath);
+}
+
 let logger: FileLogger | null = null;
 let shutdownState: ShutdownState | null = null;
 let cleanShutdownWritten = false;

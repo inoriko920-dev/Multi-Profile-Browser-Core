@@ -12,7 +12,7 @@ if errorlevel 1 (
   echo [ERROR] Node.js tidak ditemukan di PATH.
   echo Install Node.js 24 lalu jalankan file ini lagi.
   echo.
-  pause
+  if not "%MPBC_STEP02_RUNNER_CI%"=="1" pause
   exit /b 1
 )
 
@@ -21,8 +21,14 @@ if errorlevel 1 (
   echo [ERROR] npm tidak ditemukan di PATH.
   echo Pastikan instalasi Node.js/npm benar.
   echo.
-  pause
+  if not "%MPBC_STEP02_RUNNER_CI%"=="1" pause
   exit /b 1
+)
+
+if "%MPBC_STEP02_RUNNER_CI%"=="1" (
+  echo [CI] Menjalankan dry-run launcher STEP 02.
+  call npm run step02:manual:ci
+  exit /b %ERRORLEVEL%
 )
 
 echo Launcher akan menjalankan seluruh preflight STEP 02,

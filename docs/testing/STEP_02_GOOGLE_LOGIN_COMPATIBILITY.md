@@ -25,9 +25,12 @@ npm run lint
 npm test
 npm run smoke
 npm run smoke:browser
+npm run smoke:step02
 ```
 
 Pastikan semua command otomatis PASS sebelum login manual dimulai.
+
+`npm run smoke:step02` adalah test offline untuk harness saja. Test ini memastikan flag `--step02`, shell lokal, satu browser surface, logging mode, dan clean shutdown bekerja. Test ini **tidak** mengakses Google dan tidak mencoba login.
 
 ## Jalankan mode STEP 02
 

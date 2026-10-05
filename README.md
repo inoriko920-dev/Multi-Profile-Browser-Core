@@ -73,12 +73,15 @@ npm run lint
 npm test
 npm run smoke
 npm run smoke:browser
+npm run smoke:step02
 npm start
 ```
 
 `npm run smoke` membuktikan bootstrap + clean-shutdown STEP 00.
 
 `npm run smoke:browser` membuktikan browser engine STEP 01 pada real Electron: HTTPS navigation, Back, Forward, Reload, controlled navigation failure, dan cleanup `WebContentsView`.
+
+`npm run smoke:step02` membuktikan harness STEP 02 dapat start dengan flag khusus, membuat tepat satu browser surface, mengenali mode manual compatibility, lalu quit bersih tanpa mencoba login atau mengakses credential.
 
 ## Menjalankan STEP 02
 

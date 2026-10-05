@@ -1,8 +1,11 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, type BrowserWindow as BrowserWindowType } from 'electron';
 import { randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { createFoundationWindow } from './bootstrap/create-window';
 import { getFoundationInfo } from './bootstrap/runtime-info';
+import { createBrowserController } from './browser/browser-controller';
+import { runStep01Smoke } from './browser/step01-smoke';
+import { PRIMARY_BROWSER_SURFACE_ID } from './ipc/browser-ipc';
 import { FileLogger, normalizeError } from './logging/file-logger';
 import { ShutdownState } from './recovery/shutdown-state';
 
@@ -38,6 +41,47 @@ function exitAfterFatal(event: string, error: unknown): void {
   }
 }
 
+function createApplicationWindow(): BrowserWindowType {
+  if (!logger) {
+    throw new Error('Logger must be initialized before creating a window.');
+  }
+
+  const window = createFoundationWindow(logger);
+
+  if (process.env.MPBC_SMOKE_TEST === '1') {
+    window.webContents.once('did-finish-load', () => {
+      logger?.info('app.smoke_test_pass');
+      app.quit();
+    });
+    return window;
+  }
+
+  const controller = createBrowserController(window, logger);
+
+  if (process.env.MPBC_STEP01_SMOKE === '1') {
+    void runStep01Smoke(window, controller.backend, logger)
+      .then(() => {
+        controller.cleanup();
+        app.quit();
+      })
+      .catch((error: unknown) => {
+        controller.cleanup();
+        exitAfterFatal('step01.smoke_failed', error);
+      });
+    return window;
+  }
+
+  void controller.backend
+    .navigate(PRIMARY_BROWSER_SURFACE_ID, 'https://example.com/')
+    .catch((error: unknown) => {
+      logger?.warn('browser.initial_navigation_failed', {
+        error: normalizeError(error),
+      });
+    });
+
+  return window;
+}
+
 process.on('uncaughtException', (error) => {
   exitAfterFatal('process.uncaught_exception', error);
 });
@@ -71,18 +115,11 @@ void app
       runtime: getFoundationInfo(),
     });
 
-    const window = createFoundationWindow(logger);
-
-    if (process.env.MPBC_SMOKE_TEST === '1') {
-      window.webContents.once('did-finish-load', () => {
-        logger?.info('app.smoke_test_pass');
-        app.quit();
-      });
-    }
+    createApplicationWindow();
 
     app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0 && logger) {
-        createFoundationWindow(logger);
+      if (BrowserWindow.getAllWindows().length === 0) {
+        createApplicationWindow();
       }
     });
   })

@@ -2,7 +2,7 @@
   "name": "multi-profile-browser-core",
   "version": "0.0.1",
   "private": true,
-  "description": "Stable multi-profile browser foundation. STEP 00 contains local-only Electron scaffolding; no remote browsing or account automation yet.",
+  "description": "Stable multi-profile browser foundation. STEP 01 adds one minimal WebContentsView browser surface; account login and persistence come later.",
   "main": "dist/src/main/index.js",
   "type": "commonjs",
   "engines": {
@@ -15,6 +15,7 @@
     "lint": "eslint .",
     "test": "npm run build && node scripts/run-tests.mjs",
     "smoke": "npm run build && node scripts/smoke-electron.mjs",
+    "smoke:browser": "npm run build && node scripts/smoke-browser-engine.mjs",
     "start": "npm run build && electron .",
     "dev": "npm run start"
   },

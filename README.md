@@ -37,6 +37,7 @@ Sebelum implementasi, baca:
 - [`01_TEST_PLAN_MULTI_PROFILE_BROWSER_CORE.md`](docs/planning/01_TEST_PLAN_MULTI_PROFILE_BROWSER_CORE.md)
 - [`docs/planning/README.md`](docs/planning/README.md)
 - [`STEP_02_GOOGLE_LOGIN_COMPATIBILITY.md`](docs/testing/STEP_02_GOOGLE_LOGIN_COMPATIBILITY.md)
+- [`STEP_03_PERSISTENT_SINGLE_PROFILE.md`](docs/testing/STEP_03_PERSISTENT_SINGLE_PROFILE.md) — **persiapan saja; BLOCKED sampai STEP 02 PASS**
 
 Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek. Versi Markdown adalah sumber yang mudah dibaca GitHub, dicari, dibandingkan melalui Git, dan digunakan implementer/AI.
 
@@ -45,7 +46,7 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 - ✅ STEP 00 — Project Foundation
 - ✅ STEP 01 — Minimal Browser Engine
 - ⏳ STEP 02 — Google Login Compatibility Gate
-- STEP 03 — Persistent Profile
+- ⛔ STEP 03 — Persistent Profile (**prepared, blocked by STEP 02**)
 - STEP 04 — Profile Manager
 - STEP 05 — Multi-Profile Isolation
 - STEP 06 — Profile Launcher
@@ -118,7 +119,7 @@ Browser core saat ini mempunyai:
 - shortcut STEP 02 untuk Google/YouTube targets;
 - session **in-memory/non-persistent** untuk compatibility test.
 
-Persistent partition belum diaktifkan karena itu baru dikerjakan setelah Google Login Compatibility Gate PASS.
+Persistent partition **belum diaktifkan**. STEP 03 baru disiapkan sebagai dokumen/issue dan tetap diblokir sampai Google Login Compatibility Gate PASS.
 
 ## Non-goals fase pondasi
 
@@ -159,4 +160,4 @@ Setiap profile nantinya menggunakan persistent partition sendiri. Session/cookie
 
 Harness manual STEP 02 sudah disiapkan. Issue #5 tetap OPEN sampai satu login Google manual, Google, YouTube, YouTube Studio, serta Back/Forward/Reload terbukti PASS tanpa bypass/anti-detection hack.
 
-STEP 03 (persistent session) tidak boleh dimulai sampai compatibility gate tersebut PASS.
+**STEP 03 sudah dipersiapkan, tetapi belum diimplementasikan.** Issue implementasinya harus tetap BLOCKED sampai Issue #5 ditutup sebagai completed.

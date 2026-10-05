@@ -20,6 +20,8 @@
     "step02": "npm run build && electron . --step02",
     "step02:evidence": "node scripts/step02-evidence.mjs",
     "step02:evidence:ci": "node scripts/step02-evidence.mjs --ci",
+    "step02:manual": "node scripts/run-step02-manual.mjs",
+    "step02:manual:ci": "node scripts/run-step02-manual.mjs --dry-run",
     "start": "npm run build && electron .",
     "dev": "npm run start"
   },

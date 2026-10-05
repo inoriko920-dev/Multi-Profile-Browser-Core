@@ -40,6 +40,7 @@ Sebelum implementasi, baca:
 - [`STEP_03_PERSISTENT_SINGLE_PROFILE.md`](docs/testing/STEP_03_PERSISTENT_SINGLE_PROFILE.md) — **persiapan saja; BLOCKED sampai STEP 02 PASS**
 - [`STEP_04_PROFILE_MANAGER.md`](docs/testing/STEP_04_PROFILE_MANAGER.md) — **persiapan saja; BLOCKED sampai STEP 03 PASS**
 - [`STEP_05_MULTI_PROFILE_ISOLATION.md`](docs/testing/STEP_05_MULTI_PROFILE_ISOLATION.md) — **persiapan saja; BLOCKED sampai STEP 04 PASS**
+- [`STEP_06_PROFILE_LAUNCHER.md`](docs/testing/STEP_06_PROFILE_LAUNCHER.md) — **persiapan saja; BLOCKED sampai STEP 05 PASS**
 
 Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek. Versi Markdown adalah sumber yang mudah dibaca GitHub, dicari, dibandingkan melalui Git, dan digunakan implementer/AI.
 
@@ -51,7 +52,7 @@ Versi DOCX adalah master untuk dibaca manusia dan disimpan sebagai arsip proyek.
 - ⛔ STEP 03 — Persistent Profile (**prepared, blocked by STEP 02**)
 - ⛔ STEP 04 — Profile Manager (**prepared, blocked by STEP 03**)
 - ⛔ STEP 05 — Multi-Profile Isolation (**prepared, blocked by STEP 04**)
-- STEP 06 — Profile Launcher
+- ⛔ STEP 06 — Profile Launcher (**prepared, blocked by STEP 05**)
 - STEP 07 — Shortcut / Workspace
 - STEP 08 — Resource Management
 - STEP 09 — Recovery System
@@ -201,3 +202,5 @@ Harness manual STEP 02 sudah disiapkan. Issue #5 tetap OPEN sampai satu login Go
 **STEP 04 juga sudah dipersiapkan sebagai kontrak Profile Manager.** Issue implementasinya harus tetap BLOCKED sampai STEP 03 selesai dan terbukti menjaga persistent session dengan benar.
 
 **STEP 05 sudah dipersiapkan sebagai kontrak Multi-Profile Isolation.** Issue implementasinya harus tetap BLOCKED sampai STEP 04 selesai dan lifecycle profile terbukti stabil.
+
+**STEP 06 sudah dipersiapkan sebagai kontrak Profile Launcher.** Issue implementasinya harus tetap BLOCKED sampai STEP 05 selesai dan isolation antar profile benar-benar PASS.

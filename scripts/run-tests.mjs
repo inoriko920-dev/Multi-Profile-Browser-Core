@@ -1,6 +1,7 @@
 import { readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 async function collectTests(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -18,7 +19,8 @@ async function collectTests(directory) {
   return files.sort();
 }
 
-const testFiles = await collectTests(new URL('../dist/tests', import.meta.url));
+const compiledTestsDirectory = fileURLToPath(new URL('../dist/tests', import.meta.url));
+const testFiles = await collectTests(compiledTestsDirectory);
 
 if (testFiles.length === 0) {
   console.error('No compiled test files found.');

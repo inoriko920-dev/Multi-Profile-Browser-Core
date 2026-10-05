@@ -1,0 +1,56 @@
+# Node / Electron
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+out/
+release/
+coverage/
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Runtime logs
+logs/
+*.log
+
+# Local browser/profile data
+profiles/
+user-data/
+userdata/
+sessions/
+cache/
+tmp/
+temp/
+
+# Databases generated at runtime
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# OS/editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+
+# Test artifacts
+artifacts/
+screenshots/
+test-results/
+playwright-report/
+
+# Package-manager cache
+.npm/
+.pnpm-store/
+.yarn/cache/

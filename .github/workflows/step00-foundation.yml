@@ -65,3 +65,6 @@ jobs:
 
       - name: STEP 02 safe evidence helper smoke test
         run: npm run step02:evidence:ci
+
+      - name: STEP 02 one-click runner dry-run
+        run: npm run step02:manual:ci

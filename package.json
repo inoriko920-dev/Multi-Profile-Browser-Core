@@ -1,0 +1,27 @@
+{
+  "name": "multi-profile-browser-core",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Stable multi-profile browser foundation. STEP 00 contains local-only Electron scaffolding; no remote browsing or account automation yet.",
+  "main": "dist/src/main/index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "clean": "node scripts/clean.mjs",
+    "build": "npm run clean && tsc -p tsconfig.json && node scripts/copy-static.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "npm run build && node --test dist/tests",
+    "start": "npm run build && electron .",
+    "dev": "npm run start"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.1",
+    "electron": "44.5.1",
+    "eslint": "10.10.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0"
+  }
+}

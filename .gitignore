@@ -49,6 +49,9 @@ screenshots/
 test-results/
 playwright-report/
 
+# Local manual compatibility evidence
+evidence/
+
 # Package-manager cache
 .npm/
 .pnpm-store/

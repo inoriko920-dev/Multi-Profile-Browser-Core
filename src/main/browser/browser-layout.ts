@@ -1,6 +1,6 @@
 import type { BrowserBounds } from '../../shared/browser-state';
 
-export const BROWSER_TOOLBAR_HEIGHT = 76;
+export const BROWSER_TOOLBAR_HEIGHT = 118;
 
 export function calculateBrowserBounds(
   contentWidth: number,
